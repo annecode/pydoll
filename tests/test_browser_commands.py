@@ -28,8 +28,8 @@ def test_set_window_bounds():
         'params': {'windowId': window_id, 'bounds': bounds},
     }
     assert (
-        BrowserCommands.set_window_bounds(window_id, bounds)
-        == expected_command
+            BrowserCommands.set_window_bounds(window_id, bounds)
+            == expected_command
     )
 
 

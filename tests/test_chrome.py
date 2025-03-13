@@ -30,10 +30,10 @@ class ConcreteBrowser(Browser):
 @pytest_asyncio.fixture
 async def mock_browser():
     with patch.multiple(
-        Browser,
-        _get_default_binary_location=MagicMock(
-            return_value='/fake/path/to/browser'
-        ),
+            Browser,
+            _get_default_binary_location=MagicMock(
+                return_value='/fake/path/to/browser'
+            ),
     ), patch(
         'pydoll.browser.managers.BrowserProcessManager',
         autospec=True,
@@ -360,6 +360,7 @@ async def test__get_valid_page_key_error(mock_browser):
         TargetCommands.create_target(''), timeout=60
     )
 
+
 @pytest.mark.parametrize('os_name, expected_browser_path', [
     ('Windows', r'C:\Program Files\Google\Chrome\Application\chrome.exe'),
     ('Linux', '/usr/bin/google-chrome'),
@@ -375,6 +376,7 @@ def test__get_default_binary_location(mock_validate_browser_path, mock_platform_
     mock_validate_browser_path.assert_called_once_with(expected_browser_path)
 
     assert path == expected_browser_path
+
 
 @patch('platform.system')
 def test__get_default_binary_location_throws_exception_if_os_not_supported(mock_platform_system):

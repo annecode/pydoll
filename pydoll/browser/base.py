@@ -2,6 +2,7 @@ import asyncio
 from abc import ABC, abstractmethod
 from functools import partial
 from random import randint
+from typing import Optional
 
 from pydoll import exceptions
 from pydoll.browser.managers import (
@@ -32,9 +33,9 @@ class Browser(ABC):  # noqa: PLR0904
     """
 
     def __init__(
-        self,
-        options: Options | None = None,
-        connection_port: int = None,
+            self,
+            options: Optional[Options] = None,
+            connection_port: int = None,
     ):
         """
         Initializes the Browser instance.
@@ -91,7 +92,7 @@ class Browser(ABC):  # noqa: PLR0904
             None
         """
         binary_location = (
-            self.options.binary_location or self._get_default_binary_location()
+                self.options.binary_location or self._get_default_binary_location()
         )
 
         self._setup_user_dir()
@@ -168,7 +169,7 @@ class Browser(ABC):  # noqa: PLR0904
         return response['result']['cookies']
 
     async def on(
-        self, event_name: str, callback: callable, temporary: bool = False
+            self, event_name: str, callback: callable, temporary: bool = False
     ) -> int:
         """
         Registers an event callback for a specific event. This method has
@@ -324,7 +325,7 @@ class Browser(ABC):  # noqa: PLR0904
         )
 
     async def enable_fetch_events(
-        self, handle_auth_requests: bool = False, resource_type: str = ''
+            self, handle_auth_requests: bool = False, resource_type: str = ''
     ):
         """
         Enables the Fetch domain for intercepting network requests before they
@@ -419,7 +420,7 @@ class Browser(ABC):  # noqa: PLR0904
         await self._execute_command(FetchCommands.continue_request(request_id))
 
     async def _continue_request_auth_required(
-        self, event: dict, proxy_username: str, proxy_password: str
+            self, event: dict, proxy_username: str, proxy_password: str
     ):
         """
         Resumes a network request that was previously paused in the browser

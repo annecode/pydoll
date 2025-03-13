@@ -150,10 +150,10 @@ class DomCommands:
 
     @classmethod
     def find_element(
-        cls,
-        by: SelectorType,
-        value: str,
-        object_id: str = '',
+            cls,
+            by: SelectorType,
+            value: str,
+            object_id: str = '',
     ) -> dict:
         """
         Generates a command to find a DOM element based on the specified
@@ -171,13 +171,21 @@ class DomCommands:
             dict: The CDP command to find the element.
         """
         escaped_value = value.replace('"', '\\"')
-        match by:
-            case By.CLASS_NAME:
-                selector = f'.{escaped_value}'
-            case By.ID:
-                selector = f'#{escaped_value}'
-            case _:
-                selector = escaped_value
+        if by == By.CLASS_NAME:
+            selector = f'.{escaped_value}'
+        elif by == By.ID:
+            selector = f'#{escaped_value}'
+        else:
+            selector = escaped_value
+
+        # # 3.9版本不支持当前写法
+        # match by:
+        #     case By.CLASS_NAME:
+        #         selector = f'.{escaped_value}'
+        #     case By.ID:
+        #         selector = f'#{escaped_value}'
+        #     case _:
+        #         selector = escaped_value
         if object_id and not by == By.XPATH:
             script = Scripts.RELATIVE_QUERY_SELECTOR.replace(
                 '{selector}', selector
@@ -197,10 +205,10 @@ class DomCommands:
 
     @classmethod
     def find_elements(
-        cls,
-        by: SelectorType,
-        value: str,
-        object_id: str = '',
+            cls,
+            by: SelectorType,
+            value: str,
+            object_id: str = '',
     ) -> dict:
         """
         Generates a command to find multiple DOM elements based on the
@@ -218,13 +226,12 @@ class DomCommands:
             dict: The CDP command to find the elements.
         """
         escaped_value = value.replace('"', '\\"')
-        match by:
-            case By.CLASS_NAME:
-                selector = f'.{escaped_value}'
-            case By.ID:
-                selector = f'#{escaped_value}'
-            case _:
-                selector = escaped_value
+        if by == By.CLASS_NAME:
+            selector = f'.{escaped_value}'
+        elif by == By.ID:
+            selector = f'#{escaped_value}'
+        else:
+            selector = escaped_value
         if object_id and not by == By.XPATH:
             script = Scripts.RELATIVE_QUERY_SELECTOR_ALL.replace(
                 '{selector}', escaped_value

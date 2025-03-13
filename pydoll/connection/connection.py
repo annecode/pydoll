@@ -1,7 +1,7 @@
 import asyncio
 import json
 import logging
-from typing import Callable
+from typing import Callable, Optional
 
 import websockets
 
@@ -22,11 +22,11 @@ class ConnectionHandler:
     """
 
     def __init__(
-        self,
-        connection_port: int,
-        page_id: str = 'browser',
-        ws_address_resolver: Callable[[int], str] = get_browser_ws_address,
-        ws_connector: Callable = websockets.connect,
+            self,
+            connection_port: int,
+            page_id: str = 'browser',
+            ws_address_resolver: Callable[[int], str] = get_browser_ws_address,
+            ws_connector: Callable = websockets.connect,
     ):
         """
         Initializes the ConnectionHandler instance.
@@ -129,7 +129,7 @@ class ConnectionHandler:
             raise exc
 
     async def register_callback(
-        self, event_name: str, callback: Callable, temporary: bool = False
+            self, event_name: str, callback: Callable, temporary: bool = False
     ):
         """
         Registers a callback function for a specific event.
@@ -299,7 +299,7 @@ class ConnectionHandler:
             await self._handle_event_message(message)
 
     @staticmethod
-    def _parse_message(raw_message: str) -> dict | None:
+    def _parse_message(raw_message: str) -> Optional[dict]:
         """
         Attempts to parse raw message string into JSON.
         Returns parsed dict or None if parsing fails.

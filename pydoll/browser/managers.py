@@ -3,6 +3,7 @@ import shutil
 import subprocess
 from contextlib import suppress
 from tempfile import TemporaryDirectory
+from typing import Optional
 
 from pydoll.browser.options import Options
 
@@ -52,7 +53,7 @@ class ProxyManager:
 
         return private_proxy, credentials
 
-    def _find_proxy_argument(self) -> tuple[int, str] | None:
+    def _find_proxy_argument(self) -> Optional[tuple[int, str]]:
         """
         Finds the first valid --proxy-server argument in browser options.
 
@@ -235,7 +236,7 @@ class TempDirectoryManager:
 
 class BrowserOptionsManager:
     @staticmethod
-    def initialize_options(options: Options | None) -> Options:
+    def initialize_options(options: Optional[Options]) -> Options:
         """
         Initializes options for the browser.
 
